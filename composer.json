@@ -1,0 +1,15 @@
+{
+  "name": "ivanboring/ai_interpolator_youtube",
+  "description": "Youtube downloader for AI Interpolator for Drupal",
+  "type": "drupal-module",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "drupal/ai_interpolator": "^1.0.0-rc1"
+  },
+  "authors": [
+    {
+      "name": "Marcus Johansson",
+      "email": "me@marcusmailbox.com"
+    }
+  ]
+}

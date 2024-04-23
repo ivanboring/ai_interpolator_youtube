@@ -1,0 +1,8 @@
+name: AI Interpolator Youtube
+type: module
+description: Download from a Youtube link into a video or audio file field.
+package: AI Interpolator
+core_version_requirement: ^10
+
+dependencies:
+  - ai_interpolator:ai_interpolator
