@@ -21,7 +21,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * @AiInterpolatorFieldRule(
  *   id = "ai_interpolator_youtube_audio",
- *   title = @Translation("Youtube Link to Audio"),
+ *   title = @Translation("Video Provider Link to Audio"),
  *   field_rule = "file",
  *   target = "file",
  * )
@@ -31,7 +31,7 @@ class YoutubeLinkToAudio extends AiInterpolatorFieldRule implements AiInterpolat
   /**
    * {@inheritDoc}
    */
-  public $title = 'Youtube Link to Audio';
+  public $title = 'Video Provider Link to Audio';
 
   /**
    * The entity type manager.
