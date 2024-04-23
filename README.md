@@ -1,5 +1,5 @@
 # AI Interpolator Youtube
-This is a module for the (https://www.drupal.org/project/ai_interpolator)[AI Interpolator] module for Drupal.
+This is a module for the [AI Interpolator](https://www.drupal.org/project/ai_interpolator) module for Drupal.
 
 Because youtube-dl gets constant take downs, I did not want to host this on drupal.org and get them into troubles, so here it is :)
 
