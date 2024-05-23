@@ -10,14 +10,14 @@ Add the following into your composer.json on the repositories key:
 "repositories": {
   "ai_interpolator_youtube": {
     "type": "vcs",
-    "url": "https://github.com/ivan_boring/ai_interpolator_youtube.git"
+    "url": "https://github.com/ivanboring/ai_interpolator_youtube.git"
   }
 },
 ```
 
 then run:
 
-`composer require "ivan_boring/ai:interpolator:^1.0@alpha"`
+`composer require "ivanboring/ai:interpolator:^1.0@alpha"`
 
 ## Requirements
 For the video rule you need youtube-dl installed on your server.
