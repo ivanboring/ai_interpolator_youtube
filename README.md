@@ -17,7 +17,7 @@ Add the following into your composer.json on the repositories key:
 
 then run:
 
-`composer require "ivanboring/ai:interpolator:^1.0@alpha"`
+`composer require "ivanboring/ai_interpolator_youtube:^1.0@alpha"`
 
 ## Requirements
 For the video rule you need youtube-dl installed on your server.
