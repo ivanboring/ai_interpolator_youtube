@@ -163,8 +163,7 @@ class YoutubeLinkToAudio extends AiInterpolatorFieldRule implements AiInterpolat
     if (!shell_exec($command)) {
       return FALSE;
     }
-    $command = (PHP_OS == 'WINNT') ? 'where youtube-dl' : 'which youtube-dl';
-    if (!shell_exec($command)) {
+    if (!$this->getExecutionPath()) {
       return FALSE;
     }
     return TRUE;
@@ -213,8 +212,10 @@ class YoutubeLinkToAudio extends AiInterpolatorFieldRule implements AiInterpolat
     foreach ($values as $value) {
       // Create a tmp file using Drupal file system.
       $tmpFile = $this->fileSystem->tempnam($this->fileSystem->getTempDirectory(), 'youtube_') . '.mp3';
+      // Get executable.
+      $exec = $this->getExecutionPath();
       // Download the file and force webm.
-      exec("youtube-dl -o $tmpFile \"$value\" --extract-audio --audio-format mp3", $output, $return);
+      exec("$exec -o $tmpFile \"$value\" --extract-audio --audio-format mp3", $output, $return);
       // If we have a file, get the filename.
       if ($return) {
         throw new AiInterpolatorResponseErrorException("Failed to download file from Youtube.");
@@ -241,6 +242,26 @@ class YoutubeLinkToAudio extends AiInterpolatorFieldRule implements AiInterpolat
     }
     // Then set the value.
     $entity->set($fieldDefinition->getName(), $fileEntities);
+  }
+
+  /**
+   * Figure out executable.
+   *
+   * @return string
+   *   The path to the executable.
+   */
+  public function getExecutionPath() {
+    $command = (PHP_OS == 'WINNT') ? 'where youtube-dl' : 'which youtube-dl';
+    $path = shell_exec($command);
+    if ($path) {
+      return 'youtube-dl';
+    }
+    $command = (PHP_OS == 'WINNT') ? 'where yt-dlpg' : 'which yt-dlp';
+    $path = shell_exec($command);
+    if ($path) {
+      return 'yt-dlp';
+    }
+    return '';
   }
 
 }

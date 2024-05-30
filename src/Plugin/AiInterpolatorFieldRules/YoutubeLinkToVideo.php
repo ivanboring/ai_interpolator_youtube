@@ -159,11 +159,7 @@ class YoutubeLinkToVideo extends AiInterpolatorFieldRule implements AiInterpolat
    */
   public function ruleIsAllowed(ContentEntityInterface $entity, FieldDefinitionInterface $fieldDefinition) {
     // Checks system for ffmpeg, otherwise this rule does not exist.
-    $command = (PHP_OS == 'WINNT') ? 'where youtube-dl' : 'which youtube-dl';
-    if (!shell_exec($command)) {
-      return FALSE;
-    }
-    return TRUE;
+    return $this->getExecutionPath();
   }
 
   /**
@@ -209,8 +205,10 @@ class YoutubeLinkToVideo extends AiInterpolatorFieldRule implements AiInterpolat
     foreach ($values as $value) {
       // Create a tmp file using Drupal file system.
       $tmpFile = $this->fileSystem->tempnam($this->fileSystem->getTempDirectory(), 'youtube_');
+      // Get executable.
+      $exec = $this->getExecutionPath();
       // Download the file and force webm.
-      exec("youtube-dl -o $tmpFile \"$value\" --merge-output-format=webm", $output, $return);
+      exec("$exec -o $tmpFile \"$value\" --merge-output-format=webm", $output, $return);
       // Output tmp name.
       $realTmp = $tmpFile . '.webm';
       // If we have a file, get the filename.
@@ -239,6 +237,26 @@ class YoutubeLinkToVideo extends AiInterpolatorFieldRule implements AiInterpolat
     }
     // Then set the value.
     $entity->set($fieldDefinition->getName(), $fileEntities);
+  }
+
+  /**
+   * Figure out executable.
+   *
+   * @return string
+   *   The path to the executable.
+   */
+  public function getExecutionPath() {
+    $command = (PHP_OS == 'WINNT') ? 'where youtube-dl' : 'which youtube-dl';
+    $path = shell_exec($command);
+    if ($path) {
+      return 'youtube-dl';
+    }
+    $command = (PHP_OS == 'WINNT') ? 'where yt-dlpg' : 'which yt-dlp';
+    $path = shell_exec($command);
+    if ($path) {
+      return 'yt-dlp';
+    }
+    return '';
   }
 
 }
